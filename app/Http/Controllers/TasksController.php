@@ -14,7 +14,10 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return view('index');
+        return response()
+                ->json([
+                    'tasks' => Task::all()
+                ]);
     }
 
     /**
@@ -40,6 +43,9 @@ class TasksController extends Controller
         $task->completed = false;
 
         $task->save();
+
+        return response()
+                    ->json(['msg' => 'Successful']);
     }
 
     /**

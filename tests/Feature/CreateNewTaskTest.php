@@ -21,7 +21,7 @@ class CreateNewTaskTest extends TestCase
      */
     public function testPostRequest()
     {
-        $response = $this->post('/', [
+        $response = $this->post('/tasks', [
             'title' => 'Task #1',
         ]);
 

@@ -1,3 +1,40 @@
+class Task extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isCompleted : props.completed === 'true'
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    render() {
+        return React.createElement('a', {
+                href: '#',
+                className: 'list-group-item list-group-item-action'
+            },
+            React.createElement("div", { className: 'form-check'},
+                React.createElement("input", {
+                    type: "checkbox",
+                    name: "task",
+                    className: "form-check-input",
+                    checked: this.state.isCompleted,
+                    onChange: this.handleChange
+                }),
+                this.props.title
+            )
+        )
+    }
+
+    handleChange(e) {
+        this.setState(state => ({
+            isCompleted: !state.isCompleted
+        }))
+    }
+}
+
 class List extends React.Component {
     render() {
         return React.createElement(
@@ -7,59 +44,24 @@ class List extends React.Component {
                     className: 'list-group'
                 },
 
-                this.props.tasks.map(task => React.createElement('a', {
-                            key: task.id,
-                            href: '#',
-                            className: 'list-group-item list-group-item-action'
-                        },
-                        task.title
-                    )
+                this.props.tasks.map(task => React.createElement(Task, {
+                        key: task._id,
+                        title: task.title,
+                        completed: task.completed.toString()
+                    })
                 )
-
             )
         );
     }
 }
-/**
-<div className="todo">
 
-    <div className="list-group">
-        <a href="#" className="list-group-item list-group-item-action">
-            <div className="form-check">
-                <input type="checkbox" name="task" className="form-check-input"/>
-                Cras justo odio
-            </div>
-        </a>
-        <a href="#" className="list-group-item list-group-item-action">
-            <div className="form-check">
-                <input type="checkbox" name="task" className="form-check-input"/>
-                Another Task
-            </div>
-        </a>
-
-    </div>
-
-</div>
-*/
 class Todo extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             title: '',
-            tasks: [
-                {
-                    id: 1,
-                    title: 'Task #1',
-                    completed: false,
-                },
-
-                {
-                    id: 2,
-                    title: 'Task #2',
-                    completed: false,
-                }
-            ]
+            tasks: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -102,6 +104,15 @@ class Todo extends React.Component {
 
     }
 
+    componentDidMount() {
+        axios.get('tasks')
+            .then(response => {
+                this.setState({
+                    tasks: response.data.tasks
+                })
+            });
+    }
+
     handleChange(e) {
         this.setState({title: e.target.value});
     }
@@ -111,16 +122,23 @@ class Todo extends React.Component {
 
         if (this.formIsValid()) {
 
-            let newTask = {
-                title: this.state.title,
-                completed: false,
-                id: Math.random() * 100
-            };
+            axios.post('tasks', {
+                title: this.state.title
+            })
+                .then(res => {
+                    console.log(res);
 
-            this.setState(state => ({
-                title: '',
-                tasks: state.tasks.concat(newTask)
-            }));
+
+                    axios.get('tasks')
+                        .then(response => {
+                            this.setState({
+                                tasks: response.data.tasks
+                            })
+                        });
+
+                })
+                .catch(err => console.error(err));
+
         }
     }
 
@@ -128,6 +146,7 @@ class Todo extends React.Component {
         return this.state.title.length > 0;
     }
 }
+
 
 ReactDOM.render(
     React.createElement(Todo),
