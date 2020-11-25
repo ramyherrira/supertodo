@@ -12,6 +12,8 @@ class CreateNewTaskTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Task::truncate();
     }
 
     /**

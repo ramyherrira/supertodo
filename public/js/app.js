@@ -29,9 +29,17 @@ class Task extends React.Component {
     }
 
     handleChange(e) {
-        this.setState(state => ({
-            isCompleted: !state.isCompleted
-        }))
+        axios.put('/tasks/' +  this.props.taskID)
+            .then(res => {
+                console.log(res);
+
+                this.setState(state => ({
+                    isCompleted: !state.isCompleted
+                }));
+            })
+            .catch(err => {
+                console.error(err)
+            });
     }
 }
 
@@ -46,6 +54,7 @@ class List extends React.Component {
 
                 this.props.tasks.map(task => React.createElement(Task, {
                         key: task._id,
+                        taskID: task._id,
                         title: task.title,
                         completed: task.completed.toString()
                     })
