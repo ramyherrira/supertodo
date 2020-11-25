@@ -46,6 +46,7 @@ class Todo extends React.Component {
         super(props);
 
         this.state = {
+            title: '',
             tasks: [
                 {
                     id: 1,
@@ -58,9 +59,11 @@ class Todo extends React.Component {
                     title: 'Task #2',
                     completed: false,
                 }
-            ],
-            title: '',
-        }
+            ]
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     render() {
         return React.createElement(
@@ -72,13 +75,18 @@ class Todo extends React.Component {
                 null,
                 React.createElement(
                     "form",
-                    {className: 'form-inline'},
+                    {
+                        className: 'form-inline',
+                        onSubmit: this.handleSubmit
+                    },
 
                     React.createElement('input', {
                         id: "title",
                         type: "text",
                         className: "form-control mb-2 mr-sm-2",
-                        placeholder: "The task"
+                        placeholder: "The task",
+                        onChange: this.handleChange,
+                        value: this.state.title,
                     }),
 
                     React.createElement('button', {
@@ -92,6 +100,32 @@ class Todo extends React.Component {
             )
         );
 
+    }
+
+    handleChange(e) {
+        this.setState({title: e.target.value});
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+
+        if (this.formIsValid()) {
+
+            let newTask = {
+                title: this.state.title,
+                completed: false,
+                id: Math.random() * 100
+            };
+
+            this.setState(state => ({
+                title: '',
+                tasks: state.tasks.concat(newTask)
+            }));
+        }
+    }
+
+    formIsValid() {
+        return this.state.title.length > 0;
     }
 }
 
