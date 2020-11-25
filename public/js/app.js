@@ -80,16 +80,32 @@ class List extends React.Component {
                     className: 'list-group'
                 },
 
-                this.props.tasks.map(task => React.createElement(Task, {
-                        key: task._id,
-                        taskID: task._id,
-                        title: task.title,
-                        completed: task.completed.toString(),
-                        onDeleted: this.handleTaskDeleted
-                    })
-                )
+                this.displayTasks()
             )
         );
+    }
+
+    displayTasks() {
+        if (this.props.tasks.length > 0) {
+
+            return this.props.tasks.map(task => React.createElement(Task, {
+                    key: task._id,
+                    taskID: task._id,
+                    title: task.title,
+                    completed: task.completed.toString(),
+                    onDeleted: this.handleTaskDeleted
+                })
+            );
+
+        } else {
+
+            return React.createElement('a', {
+                    href: '#',
+                    className: 'list-group-item list-group-item-action d-flex justify-content-between'
+                },
+                React.createElement("i", null, "La todo liste est vide")
+            )
+        }
     }
 
     handleTaskDeleted(e) {
@@ -129,7 +145,7 @@ class Todo extends React.Component {
                         id: "title",
                         type: "text",
                         className: "form-control mb-2 mr-sm-2",
-                        placeholder: "The task",
+                        placeholder: "Titre de la tâche",
                         onChange: this.handleChange,
                         value: this.state.title,
                     }),
@@ -137,7 +153,7 @@ class Todo extends React.Component {
                     React.createElement('button', {
                         type: 'submit',
                         className: "btn btn-primary mb-2"
-                    }, 'Add')
+                    }, 'Ajouter')
                 ),
                 React.createElement(List, {
                     tasks: this.state.tasks,
