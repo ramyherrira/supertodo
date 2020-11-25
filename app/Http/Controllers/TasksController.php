@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class TasksController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,14 +26,10 @@ class TasksController extends Controller
                 ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function list()
     {
-        //
+        return view('index');
     }
 
     /**
