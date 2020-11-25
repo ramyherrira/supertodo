@@ -141,6 +141,7 @@ class Todo extends React.Component {
                     axios.get('tasks')
                         .then(response => {
                             this.setState({
+                                title: '',
                                 tasks: response.data.tasks
                             })
                         });
