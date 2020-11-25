@@ -8,12 +8,13 @@ class Task extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleDeleteBtnClick = this.handleDeleteBtnClick.bind(this);
     }
 
     render() {
         return React.createElement('a', {
                 href: '#',
-                className: 'list-group-item list-group-item-action'
+                className: 'list-group-item list-group-item-action d-flex justify-content-between'
             },
             React.createElement("div", { className: 'form-check'},
                 React.createElement("input", {
@@ -23,10 +24,17 @@ class Task extends React.Component {
                     checked: this.state.isCompleted,
                     onChange: this.handleChange
                 }),
-                this.props.title
-            )
+                this.props.title,
+            ),
+            React.createElement("button", {
+                type: 'button',
+                className: "btn btn-outline-danger",
+                delete: this.props.taskID,
+                onClick: this.handleDeleteBtnClick
+            }, 'X')
         )
     }
+
 
     handleChange(e) {
         axios.put('/tasks/' +  this.props.taskID)
@@ -41,9 +49,29 @@ class Task extends React.Component {
                 console.error(err)
             });
     }
+
+    handleDeleteBtnClick(e) {
+        let id = e.target.getAttribute('delete');
+
+        axios.delete('/tasks/' + id)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.error(err)
+            });
+
+        this.props.onDeleted(e);
+    }
 }
 
 class List extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.handleTaskDeleted = this.handleTaskDeleted.bind(this);
+    }
     render() {
         return React.createElement(
             "div",
@@ -56,11 +84,16 @@ class List extends React.Component {
                         key: task._id,
                         taskID: task._id,
                         title: task.title,
-                        completed: task.completed.toString()
+                        completed: task.completed.toString(),
+                        onDeleted: this.handleTaskDeleted
                     })
                 )
             )
         );
+    }
+
+    handleTaskDeleted(e) {
+        this.props.onDeleted(e);
     }
 }
 
@@ -75,6 +108,7 @@ class Todo extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTaskDeleted = this.handleTaskDeleted.bind(this);
     }
     render() {
         return React.createElement(
@@ -106,7 +140,8 @@ class Todo extends React.Component {
                     }, 'Add')
                 ),
                 React.createElement(List, {
-                    tasks: this.state.tasks
+                    tasks: this.state.tasks,
+                    onDeleted: this.handleTaskDeleted
                 })
             )
         );
@@ -117,6 +152,16 @@ class Todo extends React.Component {
         axios.get('tasks')
             .then(response => {
                 this.setState({
+                    tasks: response.data.tasks
+                })
+            });
+    }
+
+    handleTaskDeleted(e) {
+        axios.get('tasks')
+            .then(response => {
+                this.setState({
+                    title: '',
                     tasks: response.data.tasks
                 })
             });
