@@ -246,12 +246,11 @@ class Todo extends React.Component {
                 React.createElement(BSModal, {
                     id: this.state.selected._id,
                     title: this.state.selected.title,
-                    status: this.state.selected.completed.toString(),
+                    status: this.state.selected.completed === true ? "Complétée" : "Non Complétée",
                     created: this.state.selected.created_at
                 })
             )
         );
-
     }
 
     componentDidMount() {
