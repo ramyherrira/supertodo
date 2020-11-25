@@ -1,3 +1,61 @@
+class BSModal extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return React.createElement(
+            "div", {
+                id: "taskModal",
+                className: "modal fade",
+                tabIndex: "-1",
+                "aria-labelledby": "modallabel",
+                "aria-hidden": "true"
+            },
+            React.createElement(
+                "div",
+                {className: "modal-dialog"},
+                React.createElement(
+                    "div",
+                    {className: "modal-content"},
+                    React.createElement("div", {className: "modal-header"},
+                        React.createElement(
+                            "h5",
+                            {className: "modal-title"},
+                            "Tâche #" + this.props.id
+                        ),
+                        React.createElement(
+                            "button",
+                            {
+                                type: "button",
+                                className: "close",
+                                "data-dismiss": "modal",
+                                "aria-label": "Close"
+                            },
+                            React.createElement("span", {"aria-hidden":"true"}, "x")
+                        )
+                    ),
+                    React.createElement("div", {className: "modal-body"},
+                        React.createElement("ul", null,
+                            React.createElement("li", null, "Titre: " + this.props.title),
+                            React.createElement("li", null, "Status: " + this.props.status),
+                            React.createElement("li", null, "Créé le: " + this.props.created),
+                        )
+                    ),
+                    React.createElement("div", {className: "modal-footer"},
+                        React.createElement("button", {
+                                className: "btn btn-primary",
+                                "data-dismiss": "modal"
+                            },
+                            "Fermer"
+                        )
+                    ),
+                )
+            )
+        );
+    }
+}
+
 class Task extends React.Component {
 
     constructor(props) {
@@ -9,6 +67,7 @@ class Task extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleDeleteBtnClick = this.handleDeleteBtnClick.bind(this);
+        this.handleTaskSelected = this.handleTaskSelected.bind(this);
     }
 
     render() {
@@ -24,7 +83,13 @@ class Task extends React.Component {
                     checked: this.state.isCompleted,
                     onChange: this.handleChange
                 }),
-                this.props.title,
+                React.createElement("p", {
+                    // href: "#",
+                    "data-toggle": 'modal',
+                    "data-target": "#taskModal",
+                    selectid: this.props.taskID,
+                    onClick: this.handleTaskSelected
+                }, this.props.title),
             ),
             React.createElement("button", {
                 type: 'button',
@@ -35,7 +100,6 @@ class Task extends React.Component {
         )
     }
 
-
     handleChange(e) {
         axios.put('/tasks/' +  this.props.taskID)
             .then(res => {
@@ -44,6 +108,8 @@ class Task extends React.Component {
                 this.setState(state => ({
                     isCompleted: !state.isCompleted
                 }));
+
+                this.props.onDeleted(e);
             })
             .catch(err => {
                 console.error(err)
@@ -63,6 +129,10 @@ class Task extends React.Component {
 
         this.props.onDeleted(e);
     }
+
+    handleTaskSelected(e) {
+        this.props.onSelected(e);
+    }
 }
 
 class List extends React.Component {
@@ -71,6 +141,7 @@ class List extends React.Component {
         super(props);
 
         this.handleTaskDeleted = this.handleTaskDeleted.bind(this);
+        this.handleSelectTask = this.handleSelectTask.bind(this);
     }
     render() {
         return React.createElement(
@@ -93,7 +164,8 @@ class List extends React.Component {
                     taskID: task._id,
                     title: task.title,
                     completed: task.completed.toString(),
-                    onDeleted: this.handleTaskDeleted
+                    onDeleted: this.handleTaskDeleted,
+                    onSelected: this.handleSelectTask
                 })
             );
 
@@ -111,6 +183,10 @@ class List extends React.Component {
     handleTaskDeleted(e) {
         this.props.onDeleted(e);
     }
+
+    handleSelectTask(e) {
+        this.props.onSelected(e);
+    }
 }
 
 class Todo extends React.Component {
@@ -119,12 +195,19 @@ class Todo extends React.Component {
 
         this.state = {
             title: '',
-            tasks: []
+            tasks: [],
+            selected: {
+                _id : 0,
+                title: 0,
+                completed: true,
+                created_at: 'now'
+            },
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTaskDeleted = this.handleTaskDeleted.bind(this);
+        this.handleSelectTask = this.handleSelectTask.bind(this);
     }
     render() {
         return React.createElement(
@@ -157,7 +240,14 @@ class Todo extends React.Component {
                 ),
                 React.createElement(List, {
                     tasks: this.state.tasks,
-                    onDeleted: this.handleTaskDeleted
+                    onDeleted: this.handleTaskDeleted,
+                    onSelected: this.handleSelectTask
+                }),
+                React.createElement(BSModal, {
+                    id: this.state.selected._id,
+                    title: this.state.selected.title,
+                    status: this.state.selected.completed.toString(),
+                    created: this.state.selected.created_at
                 })
             )
         );
@@ -181,6 +271,20 @@ class Todo extends React.Component {
                     tasks: response.data.tasks
                 })
             });
+    }
+
+    handleSelectTask(e) {
+        let id = e.target.getAttribute('selectid');
+        console.log(id);
+
+        for(let i = 0; i < this.state.tasks.length; i++) {
+            let task = this.state.tasks[i];
+            if (id === task._id) {
+                this.setState({
+                    selected: task
+                });
+            }
+        }
     }
 
     handleChange(e) {
@@ -217,6 +321,7 @@ class Todo extends React.Component {
         return this.state.title.length > 0;
     }
 }
+
 
 
 ReactDOM.render(
