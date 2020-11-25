@@ -79,7 +79,10 @@ class TasksController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $task->completed = !$task->completed;
+        $task->save();
+
+        return response()->json(['msg' => 'Success']);
     }
 
     /**
