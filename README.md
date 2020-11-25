@@ -1,7 +1,11 @@
-#Installation:
+#Installation & Use:
  
 - clone this repository
 - > composer install 
 - > php artisan key:generate
-- > npm install
-- > npm run dev
+- > php artisan serve
+- Go to localhost:8000
+
+
+###Tests: 
+> phpunit 
