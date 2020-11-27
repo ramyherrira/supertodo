@@ -45,7 +45,7 @@ class Task extends React.Component {
     }
 
     handleTaskSelected(e) {
-        this.props.onSelected(e);
+        this.props.onSelected(this.props.taskID);
     }
 
     render() {
@@ -54,11 +54,7 @@ class Task extends React.Component {
                 <div className="form-check">
                     <input type="checkbox" name="task" className="form-check-input"
                            checked={this.state.isCompleted} onChange={this.handleChange} />
-
-                    <p data-toggle="modal" data-target="#taskModal"
-                       selectid={this.props.taskID} onClick={this.handleTaskSelected}>
-                        {this.props.title}
-                    </p>
+                    <span data-toggle="modal" data-target="#taskModal" onClick={this.handleTaskSelected}>{this.props.title}</span>
                 </div>
                 <button type="button" className="btn btn-sm btn-outline-danger border-0"
                         onClick={this.handleDeleteBtnClick}>

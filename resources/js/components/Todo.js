@@ -44,10 +44,7 @@ class Todo extends React.Component {
             });
     }
 
-    handleSelectTask(e) {
-        let id = e.target.getAttribute('selectid');
-        console.log(id);
-
+    handleSelectTask(id) {
         for (let i = 0; i < this.state.tasks.length; i++) {
             let task = this.state.tasks[i];
             if (id === task._id) {

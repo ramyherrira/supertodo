@@ -46,8 +46,8 @@ class List extends React.Component {
         this.props.onDeleted(e);
     }
 
-    handleSelectTask(e) {
-        this.props.onSelected(e);
+    handleSelectTask(id) {
+        this.props.onSelected(id);
     }
 }
 
