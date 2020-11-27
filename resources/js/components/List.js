@@ -9,16 +9,12 @@ class List extends React.Component {
         this.handleTaskDeleted = this.handleTaskDeleted.bind(this);
         this.handleSelectTask = this.handleSelectTask.bind(this);
     }
-    render() {
-        return React.createElement(
-            "div",
-            null,
-            React.createElement("div", {
-                    className: 'list-group'
-                },
 
-                this.displayTasks()
-            )
+    render() {
+        return (
+            <div className="list-group">
+                {this.displayTasks()}
+            </div>
         );
     }
 

@@ -65994,9 +65994,9 @@ var List = /*#__PURE__*/function (_React$Component) {
   _createClass(List, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: 'list-group'
-      }, this.displayTasks()));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "list-group"
+      }, this.displayTasks());
     }
   }, {
     key: "displayTasks",
@@ -66096,32 +66096,6 @@ var Task = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Task, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('a', {
-        href: '#',
-        className: 'list-group-item list-group-item-action d-flex justify-content-between'
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: 'form-check'
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "checkbox",
-        name: "task",
-        className: "form-check-input",
-        checked: this.state.isCompleted,
-        onChange: this.handleChange
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        "data-toggle": 'modal',
-        "data-target": "#taskModal",
-        selectid: this.props.taskID,
-        onClick: this.handleTaskSelected
-      }, this.props.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: 'button',
-        className: "btn btn-outline-danger",
-        "delete": this.props.taskID,
-        onClick: this.handleDeleteBtnClick
-      }, 'X'));
-    }
-  }, {
     key: "handleChange",
     value: function handleChange(e) {
       var _this2 = this;
@@ -66155,6 +66129,32 @@ var Task = /*#__PURE__*/function (_React$Component) {
     key: "handleTaskSelected",
     value: function handleTaskSelected(e) {
       this.props.onSelected(e);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#",
+        className: "list-group-item list-group-item-action d-flex justify-content-between"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "task",
+        className: "form-check-input",
+        checked: this.state.isCompleted,
+        onChange: this.handleChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        "data-toggle": "modal",
+        "data-target": "#taskModal",
+        selectid: this.props.taskID,
+        onClick: this.handleTaskSelected
+      }, this.props.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-outline-danger",
+        onClick: this.handleDeleteBtnClick,
+        "delete": this.props.taskID
+      }, "X"));
     }
   }]);
 

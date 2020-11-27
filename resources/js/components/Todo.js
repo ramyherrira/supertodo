@@ -121,8 +121,7 @@ class Todo extends React.Component {
                     id={this.state.selected._id}
                     title={this.state.selected.title}
                     status={this.state.selected.completed === true ? "Complétée" : "Non Complétée"}
-                    created={this.state.selected.created_at}
-                />
+                    created={this.state.selected.created_at}/>
             </div>
         );
     }
