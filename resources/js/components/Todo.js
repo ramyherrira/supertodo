@@ -97,10 +97,6 @@ class Todo extends React.Component {
 
             <div>
                 <div>
-                    <h1>Super Todo</h1>
-                </div>
-
-                <div>
                     <form className="form-inline" onSubmit={this.handleSubmit}>
 
                         <label className="sr-only" htmlFor="title">Title</label>
@@ -128,8 +124,9 @@ class Todo extends React.Component {
 }
 
 
-
-ReactDOM.render(
-    React.createElement(Todo),
-    document.getElementById('todo-app')
-);
+if (document.getElementById('todo-app')) {
+    ReactDOM.render(
+        React.createElement(Todo),
+        document.getElementById('todo-app')
+    );
+}
