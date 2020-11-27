@@ -12,7 +12,7 @@ class Todo extends React.Component {
             title: '',
             tasks: [],
             selected: {
-                _id : 0,
+                _id: 0,
                 title: 0,
                 completed: true,
                 created_at: 'now'
@@ -48,7 +48,7 @@ class Todo extends React.Component {
         let id = e.target.getAttribute('selectid');
         console.log(id);
 
-        for(let i = 0; i < this.state.tasks.length; i++) {
+        for (let i = 0; i < this.state.tasks.length; i++) {
             let task = this.state.tasks[i];
             if (id === task._id) {
                 this.setState({
@@ -103,14 +103,23 @@ class Todo extends React.Component {
                         <input
                             type="text" className="form-control mb-2 mr-sm-2"
                             id="title" placeholder="Titre de la tâche"
-                            onChange={this.handleChange} />
+                            onChange={this.handleChange}/>
 
-                        <button type="submit" className="btn btn-primary mb-2">Ajouter</button>
+                        <button type="submit" className="btn btn-primary mb-2">
+                            <span class="btn-label">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-plus"
+                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd"
+                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                                Ajouter
+                            </span>
+                        </button>
                     </form>
 
                     <List tasks={this.state.tasks}
-                        onDeleted={this.handleTaskDeleted}
-                        onSelected={this.handleSelectTask} />
+                          onDeleted={this.handleTaskDeleted}
+                          onSelected={this.handleSelectTask}/>
                 </div>
 
                 <BSModal
@@ -119,14 +128,14 @@ class Todo extends React.Component {
                     status={this.state.selected.completed === true ? "Complétée" : "Non Complétée"}
                     created={this.state.selected.created_at}/>
             </div>
+    );
+    }
+    }
+
+
+    if (document.getElementById('todo-app')) {
+        ReactDOM.render(
+            React.createElement(Todo),
+            document.getElementById('todo-app')
         );
     }
-}
-
-
-if (document.getElementById('todo-app')) {
-    ReactDOM.render(
-        React.createElement(Todo),
-        document.getElementById('todo-app')
-    );
-}
