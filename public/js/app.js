@@ -66236,33 +66236,6 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Todo, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, 'Super Todo')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: 'form-inline',
-        onSubmit: this.handleSubmit
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', {
-        id: "title",
-        type: "text",
-        className: "form-control mb-2 mr-sm-2",
-        placeholder: "Titre de la tâche",
-        onChange: this.handleChange,
-        value: this.state.title
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('button', {
-        type: 'submit',
-        className: "btn btn-primary mb-2"
-      }, 'Ajouter')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_List__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        tasks: this.state.tasks,
-        onDeleted: this.handleTaskDeleted,
-        onSelected: this.handleSelectTask
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BSModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        id: this.state.selected._id,
-        title: this.state.selected.title,
-        status: this.state.selected.completed === true ? "Complétée" : "Non Complétée",
-        created: this.state.selected.created_at
-      })));
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -66336,12 +66309,41 @@ var Todo = /*#__PURE__*/function (_React$Component) {
     value: function formIsValid() {
       return this.state.title.length > 0;
     }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Super Todo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form-inline",
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "sr-only",
+        htmlFor: "title"
+      }, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "form-control mb-2 mr-sm-2",
+        id: "title",
+        placeholder: "Titre de la t\xE2che",
+        onChange: this.handleChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary mb-2"
+      }, "Ajouter")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_List__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        tasks: this.state.tasks,
+        onDeleted: this.handleTaskDeleted,
+        onSelected: this.handleSelectTask
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BSModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        id: this.state.selected._id,
+        title: this.state.selected.title,
+        status: this.state.selected.completed === true ? "Complétée" : "Non Complétée",
+        created: this.state.selected.created_at
+      }));
+    }
   }]);
 
   return Todo;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Todo), document.getElementById('app'));
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Todo), document.getElementById('todo-app'));
 
 /***/ }),
 

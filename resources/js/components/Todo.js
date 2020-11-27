@@ -24,49 +24,6 @@ class Todo extends React.Component {
         this.handleTaskDeleted = this.handleTaskDeleted.bind(this);
         this.handleSelectTask = this.handleSelectTask.bind(this);
     }
-    render() {
-        return React.createElement(
-            "div",
-            null,
-            React.createElement("div", null, React.createElement("h1", null, 'Super Todo')),
-            React.createElement(
-                "div",
-                null,
-                React.createElement(
-                    "form",
-                    {
-                        className: 'form-inline',
-                        onSubmit: this.handleSubmit
-                    },
-
-                    React.createElement('input', {
-                        id: "title",
-                        type: "text",
-                        className: "form-control mb-2 mr-sm-2",
-                        placeholder: "Titre de la tâche",
-                        onChange: this.handleChange,
-                        value: this.state.title,
-                    }),
-
-                    React.createElement('button', {
-                        type: 'submit',
-                        className: "btn btn-primary mb-2"
-                    }, 'Ajouter')
-                ),
-                React.createElement(List, {
-                    tasks: this.state.tasks,
-                    onDeleted: this.handleTaskDeleted,
-                    onSelected: this.handleSelectTask
-                }),
-                React.createElement(BSModal, {
-                    id: this.state.selected._id,
-                    title: this.state.selected.title,
-                    status: this.state.selected.completed === true ? "Complétée" : "Non Complétée",
-                    created: this.state.selected.created_at
-                })
-            )
-        );
-    }
 
     componentDidMount() {
         axios.get('tasks')
@@ -134,11 +91,46 @@ class Todo extends React.Component {
     formIsValid() {
         return this.state.title.length > 0;
     }
+
+    render() {
+        return (
+
+            <div>
+                <div>
+                    <h1>Super Todo</h1>
+                </div>
+
+                <div>
+                    <form className="form-inline" onSubmit={this.handleSubmit}>
+
+                        <label className="sr-only" htmlFor="title">Title</label>
+                        <input
+                            type="text" className="form-control mb-2 mr-sm-2"
+                            id="title" placeholder="Titre de la tâche"
+                            onChange={this.handleChange} />
+
+                        <button type="submit" className="btn btn-primary mb-2">Ajouter</button>
+                    </form>
+
+                    <List tasks={this.state.tasks}
+                        onDeleted={this.handleTaskDeleted}
+                        onSelected={this.handleSelectTask} />
+                </div>
+
+                <BSModal
+                    id={this.state.selected._id}
+                    title={this.state.selected.title}
+                    status={this.state.selected.completed === true ? "Complétée" : "Non Complétée"}
+                    created={this.state.selected.created_at}
+                />
+            </div>
+        );
+    }
 }
 
 
 
 ReactDOM.render(
     React.createElement(Todo),
-    document.getElementById('app')
+    document.getElementById('todo-app')
 );
