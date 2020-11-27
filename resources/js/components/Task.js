@@ -31,7 +31,7 @@ class Task extends React.Component {
     }
 
     handleDeleteBtnClick(e) {
-        let id = e.target.getAttribute('delete');
+        let id = this.props.taskID;
 
         axios.delete('/tasks/' + id)
             .then(res => {
@@ -61,8 +61,7 @@ class Task extends React.Component {
                     </p>
                 </div>
                 <button type="button" className="btn btn-sm btn-outline-danger border-0"
-                        onClick={this.handleDeleteBtnClick}
-                        delete={this.props.taskID}>
+                        onClick={this.handleDeleteBtnClick}>
 
                             <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor"
                                  xmlns="http://www.w3.org/2000/svg">
