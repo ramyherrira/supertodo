@@ -13,4 +13,5 @@ require('./bootstrap');
  */
 
 // require('./components/Example');
-require('./components/Todo');
+// require('./components/Todo');
+require('./index')

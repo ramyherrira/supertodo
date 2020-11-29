@@ -96,14 +96,14 @@ class Todo extends React.Component {
                 <div>
                     <form className="form-inline" onSubmit={this.handleSubmit}>
 
-                        <label className="sr-only" htmlFor="title">Title</label>
+                        <label className="col sr-only" htmlFor="title">Title</label>
                         <input
-                            type="text" className="form-control mb-2 mr-sm-2"
+                            type="text" className="col-10 form-control mb-2 mr-sm-2"
                             id="title" placeholder="Titre de la tâche"
                             value={this.state.title}
                             onChange={this.handleChange}/>
 
-                        <button type="submit" className="btn btn-primary mb-2">
+                        <button type="submit" className="col btn btn-primary mb-2">
                             <span className="btn-label">
                                 <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-plus"
                                      fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -126,14 +126,8 @@ class Todo extends React.Component {
                     status={this.state.selected.completed === true ? "Complétée" : "Non Complétée"}
                     created={this.state.selected.created_at}/>
             </div>
-    );
-    }
-    }
-
-
-    if (document.getElementById('todo-app')) {
-        ReactDOM.render(
-            React.createElement(Todo),
-            document.getElementById('todo-app')
         );
     }
+}
+
+export default Todo
