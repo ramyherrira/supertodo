@@ -6,7 +6,7 @@ import List from './List';
 
 const AddNewTaskBtn = () => {
     return (
-        <button type="submit" className="col btn btn-primary mb-2">
+        <button type="submit" className="btn btn-primary mb-2">
             <span className="btn-label">
                 <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-plus"
                      fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -40,14 +40,13 @@ const Todo = ()  => {
     const formIsValid = () => title.length > 0;
 
     return (
-        <div>
-            <div>
+        <div className="row justify-content-center">
+            <div className="col-7">
                 <form className="form-inline" onSubmit={handleSubmit}>
 
-                    <label className="col sr-only" htmlFor="title">Title</label>
                     <input
                         type="text"
-                        className="col-10 form-control mb-2 mr-sm-2"
+                        className="col form-control mb-2 mr-sm-2"
                         id="title"
                         placeholder="Titre de la tâche"
                         value={title}
