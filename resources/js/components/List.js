@@ -9,7 +9,7 @@ const EmptyListItem = () => {
     )
 };
 
-const List = ({ tasks, onSelected }) => {
+const List = ({tasks}) => {
 
     const displayTasks = () => {
 
@@ -19,8 +19,7 @@ const List = ({ tasks, onSelected }) => {
 
         return tasks.map(task => React.createElement(Task, {
                 key: task._id,
-                taskID: task._id,
-                onSelected: onSelected
+                taskID: task._id
             })
         );
     };

@@ -1,5 +1,6 @@
 const initialState = {
-    tasks: []
+    tasks: [],
+    selectId: null
 };
 
 export default function appReducer(state = initialState, action) {
@@ -15,6 +16,7 @@ export default function appReducer(state = initialState, action) {
         case 'TOGGLE_TASK': {
 
             return {
+                ...state,
                 tasks: state.tasks.map(task => {
                     if (action.payload !== task._id) {
                         return task;
@@ -40,6 +42,13 @@ export default function appReducer(state = initialState, action) {
                 ...state,
                 tasks: action.payload
             };
+        }
+
+        case 'SELECT_TASK': {
+            return {
+                ...state,
+                selectId: action.payload
+            }
         }
 
         default: {

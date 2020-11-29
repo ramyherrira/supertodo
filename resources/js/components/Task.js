@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {deleteTask, toggleTask} from "../reducer";
 
@@ -18,7 +18,7 @@ const selectTaskById = (state, id) => {
     return state.tasks.find(task => id === task._id);
 };
 
-const Task = ({ taskID, onSelected }) => {
+const Task = ({ taskID }) => {
     const dispatch = useDispatch();
     const task = useSelector(state => selectTaskById(state, taskID));
 
@@ -31,7 +31,7 @@ const Task = ({ taskID, onSelected }) => {
     };
 
     const handleTaskSelected = (e) => {
-        onSelected(taskID);
+        dispatch({ type: 'SELECT_TASK', payload: taskID });
     };
 
     return (
@@ -39,7 +39,10 @@ const Task = ({ taskID, onSelected }) => {
             <div className="form-check">
                 <input type="checkbox" name="task" className="form-check-input"
                        checked={task.completed} onChange={handleChange} />
-                <span data-toggle="modal" data-target="#taskModal" onClick={handleTaskSelected}>{task.title}</span>
+                <span data-toggle="modal" data-target="#taskModal"
+                      onClick={handleTaskSelected}>
+                    {task.title}
+                </span>
             </div>
             <button type="button" className="btn btn-sm btn-outline-danger border-0"
                     onClick={handleDeleteBtnClick}>

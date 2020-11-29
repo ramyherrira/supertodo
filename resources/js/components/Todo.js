@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addNewTask } from '../reducer';
 import BSModal from './BSModal';
@@ -24,24 +24,7 @@ const selectTasks = state => state.tasks.map(task => task);
 const Todo = ()  => {
     const dispatch = useDispatch();
     const tasks = useSelector(selectTasks);
-
     const [title, setTitle] = useState('');
-    const [selected, setSelected] = useState({
-        _id: 0,
-        title: 0,
-        completed: true,
-        created_at: 'now'
-    });
-
-    const handleSelectTask = (id) => {
-        for (let i = 0; i < tasks.length; i++) {
-            let task = tasks[i];
-
-            if (id === task._id) {
-                setSelected(task);
-            }
-        }
-    };
 
     const handleChange = (e) => setTitle(e.target.value);
 
@@ -73,16 +56,10 @@ const Todo = ()  => {
                     <AddNewTaskBtn />
                 </form>
 
-                <List
-                    tasks={tasks}
-                    onSelected={handleSelectTask} />
+                <List tasks={tasks} />
             </div>
 
-            <BSModal
-                id={selected._id}
-                title={selected.title}
-                status={selected.completed === true ? "Complétée" : "Non Complétée"}
-                created={selected.created_at}/>
+            <BSModal />
         </div>
     );
 };
