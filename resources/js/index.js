@@ -1,13 +1,18 @@
 import ReactDOM from "react-dom";
 import React from "react";
+import { Provider } from "react-redux";
 import Todo from './components/Todo'
 import store from './store'
 
-store.dispatch({ type: 'Hi_THERE', payload: 'mwé' });
+
 
 if (document.getElementById('todo-app')) {
     ReactDOM.render(
-        React.createElement(Todo),
+        <React.StrictMode>
+            <Provider store={store}>
+                <Todo />
+            </Provider>
+        </React.StrictMode>,
         document.getElementById('todo-app')
     );
 }
