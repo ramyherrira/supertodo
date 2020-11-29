@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -23,6 +24,7 @@ class UpdateTaskStatusTest extends TestCase
      */
     public function testUpdate()
     {
+        $this->actingAs(User::factory()->make());
         $task = new Task();
         $task->title = 'refined_task';
         $task->completed = false;

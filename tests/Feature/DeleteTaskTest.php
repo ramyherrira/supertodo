@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,8 +15,9 @@ class DeleteTaskTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testDeleteTask()
     {
+        $this->actingAs(User::factory()->make());
         $task = new Task();
         $task->title = 'a_soon_to_be_removed';
         $task->completed = true;
