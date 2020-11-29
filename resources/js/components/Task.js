@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {deleteTask, toggleTask} from "../reducer";
 
 const TrashIcon = () => {
     return (
@@ -12,34 +14,20 @@ const TrashIcon = () => {
     );
 };
 
-const Task = ({ taskID, title, completed, onDeleted, onSelected }) => {
-    const [isCompleted, setIsCompleted] = useState(completed === 'true');
+const selectTaskById = (state, id) => {
+    return state.tasks.find(task => id === task._id);
+};
+
+const Task = ({ taskID, onSelected }) => {
+    const dispatch = useDispatch();
+    const task = useSelector(state => selectTaskById(state, taskID));
 
     const handleChange = (e) => {
-        axios.put('/tasks/' +  taskID)
-            .then(res => {
-                console.log(res);
-
-                setIsCompleted(!isCompleted);
-
-                onDeleted(e);
-            })
-            .catch(err => {
-                console.error(err)
-            });
+        dispatch(toggleTask(taskID));
     };
 
     const handleDeleteBtnClick = (e) => {
-
-        axios.delete('/tasks/' + taskID)
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err)
-            });
-
-        onDeleted(e);
+        dispatch(deleteTask(taskID));
     };
 
     const handleTaskSelected = (e) => {
@@ -50,8 +38,8 @@ const Task = ({ taskID, title, completed, onDeleted, onSelected }) => {
         <a href="#" className="list-group-item list-group-item-action d-flex justify-content-between">
             <div className="form-check">
                 <input type="checkbox" name="task" className="form-check-input"
-                       checked={isCompleted} onChange={handleChange} />
-                <span data-toggle="modal" data-target="#taskModal" onClick={handleTaskSelected}>{title}</span>
+                       checked={task.completed} onChange={handleChange} />
+                <span data-toggle="modal" data-target="#taskModal" onClick={handleTaskSelected}>{task.title}</span>
             </div>
             <button type="button" className="btn btn-sm btn-outline-danger border-0"
                     onClick={handleDeleteBtnClick}>

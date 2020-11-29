@@ -47,7 +47,7 @@ class TasksController extends Controller
         $task->save();
 
         return response()
-                    ->json(['msg' => 'Successful']);
+                ->json(['task' => $task]);
     }
 
     /**

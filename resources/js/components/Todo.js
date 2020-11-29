@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addNewTask } from '../reducer';
 import BSModal from './BSModal';
 import List from './List';
 
@@ -17,31 +19,19 @@ const AddNewTaskBtn = () => {
     );
 };
 
+const selectTasks = state => state.tasks.map(task => task);
+
 const Todo = ()  => {
+    const dispatch = useDispatch();
+    const tasks = useSelector(selectTasks);
+
     const [title, setTitle] = useState('');
-    const [tasks, setTasks] = useState([]);
     const [selected, setSelected] = useState({
         _id: 0,
         title: 0,
         completed: true,
         created_at: 'now'
     });
-
-    useEffect(() =>  {
-        axios
-            .get('/tasks')
-            .then(
-                response => setTasks(response.data.tasks)
-            );
-    }, []);
-
-    const handleTaskDeleted = (e) => {
-        axios.get('tasks')
-            .then(response => {
-                setTitle('');
-                setTasks(response.data.tasks);
-            });
-    };
 
     const handleSelectTask = (id) => {
         for (let i = 0; i < tasks.length; i++) {
@@ -59,21 +49,8 @@ const Todo = ()  => {
         e.preventDefault();
 
         if (formIsValid()) {
-            axios
-                .post('/tasks', {
-                    title: title
-                })
-                .then(res => {
-                    console.log(res);
-
-                    axios
-                        .get('/tasks')
-                        .then(response => {
-                            setTitle('');
-                            setTasks(response.data.tasks);
-                        });
-                })
-                .catch(err => console.error(err));
+            dispatch(addNewTask(title));
+            setTitle('');
         }
     };
 
@@ -96,9 +73,9 @@ const Todo = ()  => {
                     <AddNewTaskBtn />
                 </form>
 
-                <List tasks={tasks}
-                      onDeleted={handleTaskDeleted}
-                      onSelected={handleSelectTask}/>
+                <List
+                    tasks={tasks}
+                    onSelected={handleSelectTask} />
             </div>
 
             <BSModal

@@ -9,9 +9,10 @@ const EmptyListItem = () => {
     )
 };
 
-const List = ({ tasks, onDeleted, onSelected }) => {
+const List = ({ tasks, onSelected }) => {
 
     const displayTasks = () => {
+
         if (tasks.length === 0) {
             return <EmptyListItem />
         }
@@ -19,9 +20,6 @@ const List = ({ tasks, onDeleted, onSelected }) => {
         return tasks.map(task => React.createElement(Task, {
                 key: task._id,
                 taskID: task._id,
-                title: task.title,
-                completed: task.completed.toString(),
-                onDeleted: onDeleted,
                 onSelected: onSelected
             })
         );
