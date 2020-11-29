@@ -1,61 +1,33 @@
 import React from "react";
 
-class BSModal extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const BSModal = ({ id, title, status, created}) => {
 
-    render() {
-        return React.createElement(
-            "div", {
-                id: "taskModal",
-                className: "modal fade",
-                tabIndex: "-1",
-                "aria-labelledby": "modallabel",
-                "aria-hidden": "true"
-            },
-            React.createElement(
-                "div",
-                {className: "modal-dialog"},
-                React.createElement(
-                    "div",
-                    {className: "modal-content"},
-                    React.createElement("div", {className: "modal-header"},
-                        React.createElement(
-                            "h5",
-                            {className: "modal-title"},
-                            "Tâche #" + this.props.id
-                        ),
-                        React.createElement(
-                            "button",
-                            {
-                                type: "button",
-                                className: "close",
-                                "data-dismiss": "modal",
-                                "aria-label": "Close"
-                            },
-                            React.createElement("span", {"aria-hidden":"true"}, "x")
-                        )
-                    ),
-                    React.createElement("div", {className: "modal-body"},
-                        React.createElement("ul", null,
-                            React.createElement("li", null, "Titre: " + this.props.title),
-                            React.createElement("li", null, "Status: " + this.props.status),
-                            React.createElement("li", null, "Créé le: " + this.props.created),
-                        )
-                    ),
-                    React.createElement("div", {className: "modal-footer"},
-                        React.createElement("button", {
-                                className: "btn btn-primary",
-                                "data-dismiss": "modal"
-                            },
-                            "Fermer"
-                        )
-                    ),
-                )
-            )
-        );
-    }
-}
+    return (
+        <div id="taskModal" className="modal fade" tabIndex="-1" aria-labelledby="modallabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">
+                            Tâche {id}
+                        </h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">x</span></button>
+                    </div>
+                    <div className="modal-body">
+                        <ul>
+                            <li>Titre: {title}</li>
+                            <li>Status: {status}</li>
+                            <li>Créé le: {created}</li>
+                        </ul>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-primary" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+};
 
 export default BSModal;

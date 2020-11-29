@@ -1,54 +1,37 @@
 import React from 'react';
 import Task from './Task';
 
-class List extends React.Component {
+const EmptyListItem = () => {
+    return (
+        <a href="#" className="list-group-item list-group-item-action d-flex justify-content-between">
+            <i>La liste des tâches est vide</i>
+        </a>
+    )
+};
 
-    constructor(props) {
-        super(props);
+const List = ({ tasks, onDeleted, onSelected }) => {
 
-        this.handleTaskDeleted = this.handleTaskDeleted.bind(this);
-        this.handleSelectTask = this.handleSelectTask.bind(this);
-    }
-
-    render() {
-        return (
-            <div className="list-group">
-                {this.displayTasks()}
-            </div>
-        );
-    }
-
-    displayTasks() {
-        if (this.props.tasks.length > 0) {
-
-            return this.props.tasks.map(task => React.createElement(Task, {
-                    key: task._id,
-                    taskID: task._id,
-                    title: task.title,
-                    completed: task.completed.toString(),
-                    onDeleted: this.handleTaskDeleted,
-                    onSelected: this.handleSelectTask
-                })
-            );
-
-        } else {
-
-            return React.createElement('a', {
-                    href: '#',
-                    className: 'list-group-item list-group-item-action d-flex justify-content-between'
-                },
-                React.createElement("i", null, "La todo liste est vide")
-            )
+    const displayTasks = () => {
+        if (tasks.length === 0) {
+            return <EmptyListItem />
         }
-    }
 
-    handleTaskDeleted(e) {
-        this.props.onDeleted(e);
-    }
+        return tasks.map(task => React.createElement(Task, {
+                key: task._id,
+                taskID: task._id,
+                title: task.title,
+                completed: task.completed.toString(),
+                onDeleted: onDeleted,
+                onSelected: onSelected
+            })
+        );
+    };
 
-    handleSelectTask(id) {
-        this.props.onSelected(id);
-    }
-}
+    return (
+        <div className="list-group">
+            {displayTasks()}
+        </div>
+    );
+};
 
 export default List;
