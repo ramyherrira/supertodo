@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {deleteTask, toggleTask} from "../actions/index";
+import {deleteTask, taskSelected, toggleTask} from "../actions/index";
 
 const TrashIcon = () => {
     return (
@@ -31,7 +31,7 @@ const Task = ({ taskID }) => {
     };
 
     const handleTaskSelected = (e) => {
-        dispatch({ type: 'SELECT_TASK', payload: taskID });
+        dispatch(taskSelected(taskID));
     };
 
     return (

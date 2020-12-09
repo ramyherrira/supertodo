@@ -1,3 +1,38 @@
+export function tasksLoaded (tasks) {
+    return {
+        type: 'LOAD_TASKS',
+        payload: tasks
+    };
+}
+
+export function taskAdded (task) {
+    return {
+        type: 'ADD_TASK',
+        payload: task
+    };
+}
+
+export function taskToggled (id) {
+    return {
+        type: 'TOGGLE_TASK',
+        payload: id
+    };
+}
+
+export function taskDeleted (id) {
+    return {
+        type: 'DELETE_TASK',
+        payload: id
+    };
+}
+
+export function taskSelected (id) {
+    return {
+        type: 'SELECT_TASK',
+        payload: id
+    };
+}
+
 /**
  * Send a HTTP Request to get all the tasks
  * And dispatch action to change state
@@ -9,7 +44,7 @@
 export async function fetchTasks(dispatch, getSt1ate) {
     const response = await axios.get('/tasks');
 
-    dispatch({ type: 'LOAD_TASKS', payload: response.data.tasks });
+    dispatch(tasksLoaded(response.data.tasks));
 }
 
 
@@ -28,7 +63,7 @@ export function addNewTask(title) {
             title: title
         });
 
-        dispatch({ type: 'ADD_TASK', payload: response.data.task })
+        dispatch(taskAdded(response.data.task));
     };
 }
 
@@ -44,7 +79,7 @@ export function toggleTask(id) {
     return async function toggleTaskThunk(dispatch, getState) {
         const response = await axios.put('/tasks/' + id);
 
-        dispatch({ type: 'TOGGLE_TASK', payload: id });
+        dispatch(taskToggled(id));
     }
 }
 
@@ -60,6 +95,6 @@ export function deleteTask(id) {
     return async function deleteTaskThunk(dispatch, getState) {
         const response = await axios.delete('/tasks/' + id);
 
-        dispatch({ type: 'DELETE_TASK', payload: id });
+        dispatch(taskDeleted(id));
     }
 }
