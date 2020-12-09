@@ -3,7 +3,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import Todo from './components/Todo'
 import store from './store'
-import { fetchTasks } from './reducer';
+import { fetchTasks } from './actions/index';
 
 store.dispatch(fetchTasks);
 

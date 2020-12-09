@@ -14,7 +14,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Return a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,7 +30,9 @@ class TasksController extends Controller
                 ]);
     }
 
-
+    /**
+     * @return \Illuminate\Http\Response
+     */
     public function list()
     {
         return view('index');
@@ -95,6 +97,7 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @throws \Exception
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */

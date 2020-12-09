@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {deleteTask, toggleTask} from "../reducer";
+import {deleteTask, toggleTask} from "../actions/index";
 
 const TrashIcon = () => {
     return (
