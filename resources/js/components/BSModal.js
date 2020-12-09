@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const BSModal = () => {
     const task = useSelector(state => {
@@ -12,6 +13,13 @@ const BSModal = () => {
             ? "Complétée"
             : "Non Complétée"
         ?? 'N/A';
+    };
+
+    const displayCreatedTimeDate = (task) => {
+        moment.locale('fr');
+        const date = moment(task.created_at);
+
+        return date.format('LLLL') ?? 'N/A';
     };
 
     return (
@@ -29,7 +37,7 @@ const BSModal = () => {
                         <ul>
                             <li>Titre: {task.title ?? 'Titre de la tâche'}</li>
                             <li>Status: { displayStatus(task) }</li>
-                            <li>Créé le: {task.created ?? 'Demain'}</li>
+                            <li>Créé le: { displayCreatedTimeDate(task) }</li>
                         </ul>
                     </div>
                     <div className="modal-footer">
