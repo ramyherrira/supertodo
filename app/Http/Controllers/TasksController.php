@@ -20,9 +20,13 @@ class TasksController extends Controller
      */
     public function index()
     {
+        $userId = auth()->user()->getAuthIdentifier();
+        $tasks = Task::where('user_id', $userId)
+            ->get();
+
         return response()
                 ->json([
-                    'tasks' => Task::all()
+                    'tasks' => $tasks
                 ]);
     }
 
@@ -43,6 +47,7 @@ class TasksController extends Controller
         $task = new Task;
         $task->title = $request->input('title');
         $task->completed = false;
+        $task->user_id = $request->user()->getIdAttribute();
 
         $task->save();
 

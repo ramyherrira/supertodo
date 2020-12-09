@@ -35,4 +35,20 @@ class CreateNewTaskTest extends TestCase
         $response->assertSuccessful();
         $this->assertEquals('Task #1', $task->title);
     }
+
+    /**
+     * @throws \Throwable
+     */
+    public function testPostRequestWithUser()
+    {
+        $this->actingAs($user = User::factory()->create());
+        $task = (object)$this
+            ->post('/tasks', [
+                'title' => 'Nice Task #1',
+            ])->json('task');
+
+        $this->assertTrue('Nice Task #1' === $task->title);
+        $this->assertTrue(null !== $task->user_id);
+        $this->assertEquals($user->_id, $task->user_id);
+    }
 }
